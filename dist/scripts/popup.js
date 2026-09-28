@@ -50,6 +50,12 @@
         action: "OPEN_OPTIONS"
       });
     });
+
+    const githubButton = document.getElementById("githubBtn");
+    githubButton?.addEventListener("click", (e) => {
+      e.preventDefault();
+      chrome.tabs.create({ url: "https://github.com/Cicada33016/coursera-assistant" });
+    });
   };
 
   const APPROVED_QUIZ_MODELS = [

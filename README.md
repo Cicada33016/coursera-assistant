@@ -2,8 +2,9 @@
 
 # Coursera Assistant
 
-**By Mayank Bisht**
+**Made by Mayank Bisht**
 
+[![Star on GitHub](https://img.shields.io/badge/★%20Star%20on%20GitHub-coursera--assistant-181717?style=for-the-badge&logo=github)](https://github.com/Cicada33016/coursera-assistant)
 ![Version](https://img.shields.io/badge/version-1.0.0-2563eb?style=for-the-badge)
 ![Manifest](https://img.shields.io/badge/manifest-v3-0284c7?style=for-the-badge)
 [![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-ea580c?style=for-the-badge)](https://aistudio.google.com/)
@@ -13,7 +14,7 @@
   <strong>An intuitive, high-performance Chrome extension designed to streamline Coursera lecture videos, reading assignments, discussion forum participation, interactive dialogues, and AI-assisted quiz workflows.</strong>
 </p>
 
-[Quick Start](#quick-start) • [Features](#core-features) • [Gemini API Setup](#gemini-api-setup) • [AI Models](#supported-ai-models) • [Settings](#configuration--settings)
+[★ Star on GitHub](https://github.com/Cicada33016/coursera-assistant) • [Quick Start](#quick-start) • [Features](#core-features) • [Gemini API Setup](#gemini-api-setup) • [AI Models](#supported-ai-models) • [Settings](#configuration--settings)
 
 </div>
 
