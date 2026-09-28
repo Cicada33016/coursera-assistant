@@ -4,6 +4,12 @@
  * Handles extension lifecycle events, options page triggers,
  * tab navigation tracking (urlChanged messages), and keyboard shortcuts.
  */
+try {
+  importScripts("update-manager.js");
+} catch (e) {
+  // Graceful fallback for non-worker test environments
+}
+
 (() => {
   'use strict';
 
@@ -16,6 +22,16 @@
         console.log("Updating extension to version " + updateInfo.version);
         chrome.runtime.reload();
       });
+    }
+
+    if (globalThis.AutoCourseraUpdateManager) {
+      globalThis.AutoCourseraUpdateManager.checkForUpdates(false).catch(() => {});
+    }
+  });
+
+  chrome.runtime.onStartup?.addListener(function () {
+    if (globalThis.AutoCourseraUpdateManager) {
+      globalThis.AutoCourseraUpdateManager.checkForUpdates(false).catch(() => {});
     }
   });
 
@@ -187,6 +203,18 @@
     if (request.action === "OPEN_POPUP") {
       chrome.action.openPopup?.().catch(() => {});
       sendResponse({ success: true });
+      return true;
+    }
+
+    if (request.action === "CHECK_UPDATES") {
+      (async () => {
+        if (globalThis.AutoCourseraUpdateManager) {
+          const res = await globalThis.AutoCourseraUpdateManager.checkForUpdates(Boolean(request.forceRefresh));
+          sendResponse({ success: true, state: res });
+        } else {
+          sendResponse({ success: false, error: "UpdateManager not loaded" });
+        }
+      })();
       return true;
     }
 

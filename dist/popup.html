@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coursera Assistant</title>
+    <script src="scripts/update-manager.js"></script>
     <script src="scripts/popup.js"></script>
     <link rel="stylesheet" href="ui/popup.css" />
   </head>
@@ -21,6 +22,23 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
           </button>
         </header>
+
+        <!-- Optional Update Banner -->
+        <div id="optionalUpdateBanner" class="optional-update-banner hidden">
+          <div class="banner-body">
+            <span class="banner-badge">Update Available</span>
+            <div class="banner-title">New AutoCoursera update available</div>
+            <div class="banner-versions">
+              <span id="bannerCurrentVersion" class="version-tag">1.0.0</span>
+              <span class="version-arrow">→</span>
+              <span id="bannerLatestVersion" class="version-tag highlight">1.1.0</span>
+            </div>
+          </div>
+          <div class="banner-actions">
+            <a id="btnOptionalUpdate" href="https://github.com/Cicada33016/coursera-assistant/releases/latest" class="btn-banner-update" target="_blank" rel="noopener noreferrer">Update</a>
+            <button id="btnDismissUpdate" class="btn-banner-dismiss" title="Dismiss" aria-label="Dismiss">✕</button>
+          </div>
+        </div>
 
         <!-- User Profile Header -->
         <div id="userProfile" class="user-profile hidden">
@@ -81,6 +99,59 @@
             <span>Made by Mayank Bisht</span>
           </div>
         </footer>
+      </div>
+
+      <!-- Mandatory Update Modal Overlay -->
+      <div id="mandatoryUpdateModal" class="mandatory-update-modal hidden" role="alertdialog" aria-modal="true">
+        <div class="mandatory-card">
+          <div class="mandatory-icon-wrap">
+            <svg class="mandatory-icon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <h2 class="mandatory-title">AutoCoursera Update Required</h2>
+          <p id="mandatorySubtitle" class="mandatory-subtitle">Your version is no longer supported.</p>
+
+          <div class="mandatory-version-box">
+            <div class="version-row">
+              <span class="version-label">Installed version:</span>
+              <span id="mandatoryInstalledVersion" class="version-value">1.0.0</span>
+            </div>
+            <div class="version-row">
+              <span id="mandatoryTargetLabel" class="version-label">Minimum supported version:</span>
+              <span id="mandatoryTargetVersion" class="version-value highlight">1.1.0</span>
+            </div>
+          </div>
+
+          <p class="mandatory-notice">
+            Because AutoCoursera is installed manually from GitHub, download the latest release and replace/reload the extension in Chrome.
+          </p>
+
+          <a id="btnMandatoryUpdate" href="https://github.com/Cicada33016/coursera-assistant/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-mandatory-action">
+            Update on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- First Launch Star Prompt Modal -->
+      <div id="starPromptModal" class="star-prompt-modal hidden" role="dialog" aria-modal="true">
+        <div class="star-prompt-card">
+          <div class="star-prompt-badge">Welcome to AutoCoursera 🚀</div>
+          <h3 class="star-prompt-title">Enjoying AutoCoursera?</h3>
+          <p class="star-prompt-desc">
+            Please support the project by starring it on GitHub ⭐
+          </p>
+          <div class="star-prompt-actions">
+            <button id="btnStarRepo" class="btn-star-primary">
+              ⭐ Star AutoCoursera
+            </button>
+            <button id="btnDismissStar" class="btn-star-dismiss">
+              Maybe later
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </body>

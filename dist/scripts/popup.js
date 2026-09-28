@@ -56,6 +56,113 @@
       e.preventDefault();
       chrome.tabs.create({ url: "https://github.com/Cicada33016/coursera-assistant" });
     });
+
+    initUpdateManagement();
+  };
+
+  /**
+   * Initializes Update Management UI (Banners, Mandatory Overlays, First-launch modals)
+   */
+  const initUpdateManagement = async () => {
+    const bannerEl = document.getElementById("optionalUpdateBanner");
+    const bannerCurrentEl = document.getElementById("bannerCurrentVersion");
+    const bannerLatestEl = document.getElementById("bannerLatestVersion");
+    const btnOptionalUpdate = document.getElementById("btnOptionalUpdate");
+    const btnDismissUpdate = document.getElementById("btnDismissUpdate");
+
+    const mandatoryModal = document.getElementById("mandatoryUpdateModal");
+    const mandatorySubtitle = document.getElementById("mandatorySubtitle");
+    const mandatoryInstalledEl = document.getElementById("mandatoryInstalledVersion");
+    const mandatoryTargetLabel = document.getElementById("mandatoryTargetLabel");
+    const mandatoryTargetEl = document.getElementById("mandatoryTargetVersion");
+    const btnMandatoryUpdate = document.getElementById("btnMandatoryUpdate");
+
+    const starModal = document.getElementById("starPromptModal");
+    const btnStarRepo = document.getElementById("btnStarRepo");
+    const btnDismissStar = document.getElementById("btnDismissStar");
+
+    // Banner interactions
+    btnDismissUpdate?.addEventListener("click", () => {
+      bannerEl?.classList.add("hidden");
+    });
+
+    btnOptionalUpdate?.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetUrl = btnOptionalUpdate.href || "https://github.com/Cicada33016/coursera-assistant/releases/latest";
+      chrome.tabs.create({ url: targetUrl });
+    });
+
+    btnMandatoryUpdate?.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetUrl = btnMandatoryUpdate.href || "https://github.com/Cicada33016/coursera-assistant/releases/latest";
+      chrome.tabs.create({ url: targetUrl });
+    });
+
+    // Star prompt interactions
+    btnStarRepo?.addEventListener("click", () => {
+      starModal?.classList.add("hidden");
+      chrome.tabs.create({ url: "https://github.com/Cicada33016/coursera-assistant" });
+    });
+
+    btnDismissStar?.addEventListener("click", () => {
+      starModal?.classList.add("hidden");
+    });
+
+    const updateManager = globalThis.AutoCourseraUpdateManager;
+    if (!updateManager) return;
+
+    // Check first-launch onboarding
+    try {
+      const firstLaunchResult = await updateManager.handleFirstLaunch();
+      if (firstLaunchResult?.showStarPrompt && starModal) {
+        starModal.classList.remove("hidden");
+      }
+    } catch (e) {
+      console.warn("[AutoCoursera] First-launch check error:", e);
+    }
+
+    // Function to render update state
+    const applyUpdateState = (state) => {
+      if (!state) return;
+
+      if (state.status === "MANDATORY" && mandatoryModal) {
+        mandatoryModal.classList.remove("hidden");
+        bannerEl?.classList.add("hidden");
+
+        if (mandatoryInstalledEl) mandatoryInstalledEl.textContent = state.installedVersion;
+        if (btnMandatoryUpdate && state.releaseUrl) btnMandatoryUpdate.href = state.releaseUrl;
+
+        if (state.reason === "BELOW_MINIMUM") {
+          if (mandatorySubtitle) mandatorySubtitle.textContent = "Your version is no longer supported.";
+          if (mandatoryTargetLabel) mandatoryTargetLabel.textContent = "Minimum supported version:";
+          if (mandatoryTargetEl) mandatoryTargetEl.textContent = state.minimumSupportedVersion;
+        } else {
+          // UPDATE_REQUIRED_FLAG
+          if (mandatorySubtitle) mandatorySubtitle.textContent = "A mandatory update is available.";
+          if (mandatoryTargetLabel) mandatoryTargetLabel.textContent = "Required version:";
+          if (mandatoryTargetEl) mandatoryTargetEl.textContent = state.latestVersion;
+        }
+      } else if (state.status === "OPTIONAL" && bannerEl) {
+        mandatoryModal?.classList.add("hidden");
+        bannerEl.classList.remove("hidden");
+
+        if (bannerCurrentEl) bannerCurrentEl.textContent = state.installedVersion;
+        if (bannerLatestEl) bannerLatestEl.textContent = state.latestVersion;
+        if (btnOptionalUpdate && state.releaseUrl) btnOptionalUpdate.href = state.releaseUrl;
+      } else {
+        // UP_TO_DATE
+        bannerEl?.classList.add("hidden");
+        mandatoryModal?.classList.add("hidden");
+      }
+    };
+
+    // Perform non-blocking check
+    try {
+      const state = await updateManager.checkForUpdates(false);
+      applyUpdateState(state);
+    } catch (err) {
+      console.warn("[AutoCoursera] Update check error:", err);
+    }
   };
 
   const APPROVED_QUIZ_MODELS = [
