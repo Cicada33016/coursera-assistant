@@ -11,7 +11,7 @@
 ![Status](https://img.shields.io/badge/build-verified-16a34a?style=for-the-badge)
 
 <p align="center">
-  <strong>An intuitive, high-performance Chrome extension designed to streamline Coursera lecture videos, reading assignments, discussion forum participation, interactive dialogues, and AI-assisted quiz workflows.</strong>
+  Coursera Assistant is a Chrome extension for Coursera engineered to streamline your study workflow through focused Coursera automation. It assists with course video completion, reading completion, discussion forums, and interactive Coach dialogues, while serving as a reliable Coursera quiz assistant powered by Google Gemini AI.
 </p>
 
 [★ Star on GitHub](https://github.com/Cicada33016/coursera-assistant) • [Quick Start](#quick-start) • [Features](#core-features) • [Gemini API Setup](#gemini-api-setup) • [AI Models](#supported-ai-models) • [Settings](#configuration--settings)
@@ -59,7 +59,7 @@
 <a id="gemini-api-setup"></a>
 ## 🔑 Gemini API Setup
 
-The AI Quiz Solver connects directly to the Google Gemini API. Google offers a **free tier** with generous request allowances—no billing account or credit card required.
+The AI Quiz Solver connects directly to the Google Gemini API. Google AI Studio currently offers a free tier with request allowances for supported models without requiring a billing account.
 
 ### Video Guide
 
@@ -93,7 +93,7 @@ Click the thumbnail below to view the official step-by-step setup walkthrough:
    - Paste your key into the **Gemini API Key** field and click **Save**.
 
 > [!IMPORTANT]
-> **Privacy Guarantee:** Your Gemini API key is stored locally in extension storage and is transmitted to Google Gemini solely when an AI quiz action is triggered. It is never routed through third-party servers, intermediate proxies, or external analytics services.
+> **Privacy Guarantee:** Your Gemini API key is stored locally in extension storage and is transmitted directly to Google's official Gemini API endpoints solely when an AI quiz action is triggered. It is never routed through third-party servers, intermediate proxies, or external analytics services.
 
 ---
 
@@ -102,7 +102,7 @@ Click the thumbnail below to view the official step-by-step setup walkthrough:
 
 | Module | Purpose | Implementation Details |
 | :--- | :--- | :--- |
-| **Video Completion** | Course Video Lectures | Queries the course syllabus, dispatches playback events to Coursera's progress API, and verifies completed status. |
+| **Video Completion** | Course Video Lectures | Queries the course syllabus, resolves lecture video items, and dispatches completion events to Coursera's progress API. |
 | **Reading Material** | Supplement Completion | Identifies supplement items, submits completion requests via Coursera's API, and provides real-time toast feedback. |
 | **Discussion** | Forum Responses | Locates unanswered forum prompts and posts constructive answers with configurable pacing delay to preserve natural interaction. |
 | **Coach Dialogue** | Interactive Sessions | Engages in contextual conversational exchanges with Coursera's Coach widget and completes the session natively. |
@@ -113,13 +113,13 @@ Click the thumbnail below to view the official step-by-step setup walkthrough:
 <a id="supported-ai-models"></a>
 ## 🤖 Supported AI Models
 
-Coursera Assistant supports the official free-tier Google Gemini model lineup:
+Coursera Assistant supports Google Gemini models available via Google AI Studio:
 
-| Model Identifier | Tier | Recommendation |
+| Model Identifier | AI Studio Tier | Recommendation |
 | :--- | :--- | :--- |
-| `gemini-3-flash-preview` | Free Tier | **Default & Recommended** — Optimal balance of speed, accuracy, and reasoning. |
-| `gemini-3.8-flash` | Free Tier | High-throughput multimodal model for rapid question processing. |
-| `gemini-3.5-flash` | Free Tier | Stable, battle-tested fallback model. |
+| `gemini-3-flash-preview` | Free Tier Available | **Default & Recommended** — Optimal balance of speed, accuracy, and reasoning. |
+| `gemini-3.8-flash` | Free Tier Available | High-throughput multimodal model for rapid question processing. |
+| `gemini-3.5-flash` | Free Tier Available | Stable, battle-tested fallback model. |
 
 *You can change your active model anytime from the extension popup or the Settings interface.*
 
