@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "Coursera Assistant",
+  "version": "1.0.0",
+  "author": "Mayank Bisht",
+  "version_name": "Release Version",
+  "description": "A focused Coursera companion for video, reading, discussion, dialogue, and AI-assisted quiz workflows.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "commands"
+  ],
+  "background": {
+    "service_worker": "dist/scripts/background.js"
+  },
+  "icons": {
+    "16": "dist/assets/1.png",
+    "32": "dist/assets/2.png",
+    "48": "dist/assets/3.png",
+    "128": "dist/assets/4.png"
+  },
+  "action": {
+    "default_popup": "dist/popup.html"
+  },
+  "options_page": "dist/settings.html",
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://*.coursera.org/*"
+      ],
+      "js": [
+        "dist/scripts/content.js"
+      ],
+      "css": [
+        "dist/ui/content.css"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://*.coursera.org/*"
+      ],
+      "js": [
+        "dist/scripts/interceptor.js"
+      ],
+      "world": "MAIN"
+    }
+  ],
+  "commands": {
+    "open_popup_1": {
+      "suggested_key": {
+        "default": "Alt+B",
+        "mac": "Command+B"
+      },
+      "description": "Open the Coursera Assistant popup window with Alt+B"
+    },
+    "open_popup_2": {
+      "suggested_key": {
+        "default": "Alt+W",
+        "mac": "Command+W"
+      },
+      "description": "Open the Coursera Assistant popup window with Alt+W"
+    }
+  },
+  "host_permissions": [
+    "*://*.coursera.org/*",
+    "https://generativelanguage.googleapis.com/*"
+  ]
+}

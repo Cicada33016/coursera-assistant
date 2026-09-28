@@ -1,0 +1,477 @@
+/* Coursera Assistant - Premium Popup UI Stylesheet */
+:root {
+  /* Surface Tokens */
+  --bg-canvas: #0e1014;
+  --bg-surface: #14161c;
+  --bg-surface-elevated: #1b1e26;
+  --bg-surface-active: #232733;
+
+  /* Border Tokens */
+  --border-subtle: #222631;
+  --border-control: #2b303e;
+  --border-hover: #3d4356;
+  --border-focus: #3b82f6;
+
+  /* Typography Tokens */
+  --text-primary: #f3f4f6;
+  --text-secondary: #9aa0ad;
+  --text-tertiary: #656b7a;
+  --text-disabled: #434855;
+
+  /* Restrained Accent */
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-muted: rgba(37, 99, 235, 0.14);
+  --accent-text: #60a5fa;
+
+  /* Status Colors */
+  --status-success: #10b981;
+  --status-error: #ef4444;
+
+  /* Geometry & Physics */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --transition-fast: 140ms ease-out;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  width: 340px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 14px;
+  user-select: none;
+}
+
+#courseraModelContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Header */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-logo {
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+#courseraModelTitle {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.settings-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-btn:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-control);
+  color: var(--text-primary);
+}
+
+.settings-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Section Eyebrow */
+.section-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+/* User Profile Header */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-email {
+  display: flex;
+}
+
+.email-pill {
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Workflows Section */
+.section-group {
+  display: flex;
+  flex-direction: column;
+}
+
+#courseraModelGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.courseraBtnWrapper {
+  position: relative;
+}
+
+/* Make 5th button (Solve Quiz) span full width if odd count */
+.courseraBtnWrapper:last-child:nth-child(odd) {
+  grid-column: span 2;
+}
+
+.courseraModelBtn {
+  width: 100%;
+  padding: 9px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.courseraModelBtn:hover:not(:disabled) {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-subtle);
+}
+
+.courseraModelBtn:active:not(:disabled) {
+  transform: translateY(0);
+  background: var(--bg-surface-active);
+}
+
+.courseraModelBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.courseraModelBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--border-subtle);
+}
+
+/* Gemini AI Settings & Controls */
+.gemini-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.gemini-settings-container .setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.setting-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.setting-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.setting-subtext {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  transition: all var(--transition-fast);
+  border-radius: 10px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #e2e8f0;
+  transition: all var(--transition-fast);
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+input:checked + .slider {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+  background-color: #ffffff;
+}
+
+input:focus-visible + .slider {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* API Key Form Section */
+.api-key-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-container input[type="password"] {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.input-container input[type="password"]:focus {
+  border-color: var(--border-focus);
+}
+
+.input-container input[type="password"]::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input-container select {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.input-container select:focus {
+  border-color: var(--border-focus);
+}
+
+.btn-save {
+  padding: 7px 12px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.btn-save:hover {
+  background: var(--bg-surface-active);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.btn-save:active {
+  transform: translateY(1px);
+}
+
+.btn-save.saved {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--status-success);
+  color: var(--status-success);
+}
+
+.api-key-subtitle {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  margin: 0;
+  min-height: 14px;
+}
+
+/* Primary Solve Quiz CTA */
+.btn-solve-quiz {
+  width: 100%;
+  padding: 9px 14px;
+  background: var(--accent);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), var(--shadow-subtle);
+  margin-top: 2px;
+}
+
+.btn-solve-quiz:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.btn-solve-quiz:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-solve-quiz:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.btn-solve-quiz:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

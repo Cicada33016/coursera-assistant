@@ -1,0 +1,312 @@
+/* Coursera Assistant - Quiz Progress Window Stylesheet */
+:root {
+  --bg-canvas: #0e1014;
+  --bg-surface: #14161c;
+  --bg-surface-elevated: #1b1e26;
+  --bg-surface-active: #232733;
+
+  --border-subtle: #222631;
+  --border-control: #2b303e;
+  --border-hover: #3d4356;
+
+  --text-primary: #f3f4f6;
+  --text-secondary: #9aa0ad;
+  --text-tertiary: #656b7a;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-muted: rgba(37, 99, 235, 0.12);
+  --accent-text: #60a5fa;
+
+  --status-success: #10b981;
+  --status-error: #ef4444;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --transition-fast: 140ms ease-out;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.window-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+/* Header */
+.progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-logo {
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.header-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.model-badge {
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-muted);
+  color: var(--accent-text);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Main Status Display */
+.progress-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto 0;
+  gap: 14px;
+  width: 100%;
+}
+
+.status-icon-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2.5px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status-symbol {
+  position: absolute;
+  font-size: 26px;
+  line-height: 1;
+  display: none;
+  font-weight: 600;
+}
+
+.status-symbol.success {
+  color: var(--status-success);
+  display: block;
+}
+
+.status-symbol.error {
+  color: var(--status-error);
+  display: block;
+}
+
+.status-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 280px;
+}
+
+.status-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.status-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Step Bar Indicator */
+.step-bar-container {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  height: 4px;
+  overflow: hidden;
+}
+
+.step-bar-fill {
+  height: 100%;
+  width: 10%;
+  background: var(--accent);
+  transition: width 0.3s ease, background 0.3s ease;
+  border-radius: var(--radius-sm);
+}
+
+/* Steps List */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  background: var(--bg-surface);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast);
+}
+
+.step-item.active {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.step-item.done {
+  color: var(--text-secondary);
+}
+
+.step-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-control);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.step-item.active .step-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.step-item.done .step-dot {
+  background: var(--status-success);
+}
+
+/* Footer Controls */
+.progress-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-hint {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-dismiss {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-control);
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-dismiss:hover {
+  background: var(--bg-surface-active);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.btn-dismiss:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.btn-settings {
+  background: var(--accent);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-settings:hover {
+  background: var(--accent-hover);
+}
+
+.btn-settings:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

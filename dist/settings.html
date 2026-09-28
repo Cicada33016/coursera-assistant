@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coursera Assistant — Settings</title>
+  <link rel="stylesheet" href="ui/settings.css" />
+</head>
+<body>
+  <div class="settings-shell">
+    <div class="container">
+      <!-- App Identity Header -->
+      <header class="settings-header">
+        <div class="header-brand">
+          <img src="assets/2.png" alt="Coursera Assistant" class="settings-logo" width="22" height="22" />
+          <div class="header-titles">
+            <h1>Coursera Assistant</h1>
+            <span class="header-sub">Preferences & Configuration</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="settings-body">
+        <!-- Automation Section -->
+        <section class="settings-group">
+          <div class="group-header">
+            <h2>Course Automation</h2>
+            <p class="group-description">Fine-tune automated pacing and interaction intervals across course materials.</p>
+          </div>
+
+          <div class="control-card">
+            <div class="control-row">
+              <div class="control-label-group">
+                <label for="speedInput" class="control-title">Discussion Response Delay</label>
+                <span class="control-hint">Delay between answering discussion prompts (1,000ms – 20,000ms). Default: 5,000ms.</span>
+              </div>
+              <div class="control-input-wrapper">
+                <input type="number" id="speedInput" min="1000" max="20000" step="500" value="5000" />
+                <span class="unit-badge">ms</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Gemini AI Section -->
+        <section class="settings-group">
+          <div class="group-header">
+            <h2>AI Quiz Reasoning</h2>
+            <p class="group-description">Configure the Gemini AI client used for solving Coursera assessment questions.</p>
+          </div>
+
+          <div class="control-card">
+            <div class="control-row">
+              <div class="control-label-group">
+                <label for="geminiKeyInput" class="control-title">Gemini API Key</label>
+                <span class="control-hint">Stored strictly in local browser storage. Never transmitted to third parties.</span>
+              </div>
+              <div class="control-input-wrapper full-width">
+                <input type="password" id="geminiKeyInput" placeholder="Enter Gemini API key" autocomplete="off" spellcheck="false" />
+              </div>
+            </div>
+
+            <div class="control-divider"></div>
+
+            <div class="control-row">
+              <div class="control-label-group">
+                <label for="geminiModelSelect" class="control-title">Reasoning Model</label>
+                <span class="control-hint">Select the active Gemini model for question analysis.</span>
+              </div>
+              <div class="control-input-wrapper">
+                <select id="geminiModelSelect">
+                  <option value="gemini-3.8-flash">Gemini 3.8 Flash</option>
+                  <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                  <option value="gemini-3-flash-preview" selected>Gemini 3 Flash (Recommended)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-divider"></div>
+
+            <div class="control-row">
+              <div class="control-label-group">
+                <label for="geminiAutoQuizToggle" class="control-title">Automatic Quiz Solving</label>
+                <span class="control-hint">Automatically initiate the solver when navigating to a quiz attempt page.</span>
+              </div>
+              <label class="toggle-switch" for="geminiAutoQuizToggle">
+                <input type="checkbox" id="geminiAutoQuizToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Save Action -->
+        <div class="actions-section">
+          <button id="saveBtn" class="btn-primary">Save Preferences</button>
+          <div id="status" class="status-message" aria-live="polite"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="scripts/settings.js"></script>
+</body>
+</html>

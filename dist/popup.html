@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coursera Assistant</title>
+    <script src="scripts/popup.js"></script>
+    <link rel="stylesheet" href="ui/popup.css" />
+  </head>
+
+  <body>
+    <div id="courseraModel">
+      <div id="courseraModelContent">
+        <!-- Precision Header -->
+        <header class="popup-header">
+          <div class="brand-group">
+            <img src="assets/2.png" alt="Coursera Assistant" class="brand-logo" width="20" height="20" />
+            <h1 id="courseraModelTitle">Coursera Assistant</h1>
+          </div>
+          <button id="settingsBtn" class="settings-btn" title="Open Settings" aria-label="Open Settings">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+        </header>
+
+        <!-- User Profile Header -->
+        <div id="userProfile" class="user-profile hidden">
+          <div class="user-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div class="user-info">
+            <span id="userName" class="user-name">Loading...</span>
+            <span id="userEmail" class="user-email"></span>
+          </div>
+        </div>
+
+        <!-- Automation Workflows -->
+        <div class="section-group">
+          <div class="section-eyebrow">Workflows</div>
+          <div id="courseraModelGrid"></div>
+        </div>
+
+        <!-- Gemini AI Settings & Quiz Controls -->
+        <div class="gemini-settings-container">
+          <div class="section-eyebrow">AI Quiz Assistance</div>
+
+          <div class="setting-item">
+            <div class="setting-item-text">
+              <span class="setting-title">Auto Quiz</span>
+              <span class="setting-subtext">Requires API Key</span>
+            </div>
+            <label class="toggle-switch" for="quizToggel">
+              <input type="checkbox" id="quizToggel">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="api-key-section">
+            <label for="key" class="title-label">Gemini Settings</label>
+            <div class="input-container">
+              <input type="password" id="key" placeholder="Enter API key" autocomplete="off" spellcheck="false">
+              <select id="model-select">
+                <option value="gemini-3.8-flash">Gemini 3.8 Flash</option>
+                <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                <option value="gemini-3-flash-preview" selected>Gemini 3 Flash (Recommended)</option>
+              </select>
+              <button id="save" class="btn-save">Save Settings</button>
+            </div>
+            <p id="key-status" class="api-key-subtitle">Required for auto-solving quizzes.</p>
+          </div>
+
+          <button id="autoQuiz" class="btn-solve-quiz">Solve quiz</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

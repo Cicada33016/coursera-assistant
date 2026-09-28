@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coursera Assistant — Quiz Solver</title>
+  <link rel="stylesheet" href="dist/ui/quiz-progress.css">
+</head>
+<body>
+  <div class="window-container">
+    <!-- Header -->
+    <header class="progress-header">
+      <div class="header-left">
+        <img src="dist/assets/2.png" alt="Coursera Assistant" class="brand-logo" width="18" height="18" />
+        <span class="header-title">QUIZ SOLVER</span>
+      </div>
+      <span id="modelBadge" class="model-badge">Gemini 3 Flash</span>
+    </header>
+
+    <!-- Main Dynamic Status Area -->
+    <main class="progress-main">
+      <div class="status-icon-wrapper">
+        <div id="spinner" class="spinner"></div>
+        <div id="statusSymbolSuccess" class="status-symbol">✓</div>
+        <div id="statusSymbolError" class="status-symbol">✕</div>
+      </div>
+
+      <div class="status-text-group">
+        <h2 id="statusTitle" class="status-title">Starting...</h2>
+        <p id="statusSubtitle" class="status-subtitle">Preparing quiz solver environment...</p>
+      </div>
+
+      <!-- Visual Progress Bar -->
+      <div class="step-bar-container">
+        <div id="stepBarFill" class="step-bar-fill"></div>
+      </div>
+
+      <!-- Linear Step Stages -->
+      <div class="steps-list">
+        <div id="step1" class="step-item active">
+          <div class="step-dot"></div>
+          <span class="step-text">1. Extract Questions</span>
+        </div>
+        <div id="step2" class="step-item">
+          <div class="step-dot"></div>
+          <span class="step-text">2. Gemini Reasoning</span>
+        </div>
+        <div id="step3" class="step-item">
+          <div class="step-dot"></div>
+          <span class="step-text">3. Fill Options in DOM</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Controls -->
+    <footer class="progress-footer">
+      <span id="footerHint" class="footer-hint">Window closes when finished</span>
+      <div class="footer-actions">
+        <button id="btnSettings" class="btn-settings">Settings</button>
+        <button id="btnDismiss" class="btn-dismiss">Close</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="dist/scripts/quiz-progress.js"></script>
+</body>
+</html>
