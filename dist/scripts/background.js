@@ -113,6 +113,7 @@
   // Persistent Quiz Progress Window Management
   // -------------------------------------------------------------
   let quizProgressWindowId = null;
+  let quizProgressWindowCreationPromise = null;
   let latestQuizProgress = null;
   let quizCloseTimeoutId = null;
 
@@ -122,6 +123,7 @@
       quizCloseTimeoutId = null;
     }
 
+    // 1. If a valid existing window exists: focus and return it
     if (quizProgressWindowId !== null) {
       try {
         const win = await chrome.windows.get(quizProgressWindowId);
@@ -134,20 +136,37 @@
       }
     }
 
-    try {
-      const createdWindow = await chrome.windows.create({
-        url: chrome.runtime.getURL("quiz-progress.html"),
-        type: "popup",
-        width: 360,
-        height: 460,
-        focused: true
-      });
-      quizProgressWindowId = createdWindow.id;
-      return quizProgressWindowId;
-    } catch (err) {
-      console.warn("[Quiz Window] Failed to create persistent window:", err);
-      return null;
+    // 2. If quizProgressWindowCreationPromise exists: await that SAME promise and return its resulting window ID
+    if (quizProgressWindowCreationPromise) {
+      return await quizProgressWindowCreationPromise;
     }
+
+    // 3. Otherwise create exactly ONE chrome.windows.create() operation
+    // 4. Store that Promise immediately before awaiting
+    quizProgressWindowCreationPromise = (async () => {
+      try {
+        const createdWindow = await chrome.windows.create({
+          url: chrome.runtime.getURL("quiz-progress.html"),
+          type: "popup",
+          width: 360,
+          height: 460,
+          focused: true
+        });
+        // 5. When creation finishes: assign quizProgressWindowId
+        quizProgressWindowId = createdWindow?.id ?? null;
+        return quizProgressWindowId;
+      } catch (err) {
+        // 7. If creation fails, clear the promise and allow a future retry
+        console.warn("[Quiz Window] Failed to create persistent window:", err);
+        quizProgressWindowId = null;
+        return null;
+      } finally {
+        // 6. Always clear quizProgressWindowCreationPromise in finally
+        quizProgressWindowCreationPromise = null;
+      }
+    })();
+
+    return await quizProgressWindowCreationPromise;
   }
 
   function closeQuizProgressWindow() {
@@ -334,7 +353,7 @@
       latestQuizProgress = request.payload;
 
       // Automatically open or focus the persistent window when quiz starts
-      if (request.payload?.state === "starting" || quizProgressWindowId === null) {
+      if (request.payload?.state === "starting" || (quizProgressWindowId === null && !quizProgressWindowCreationPromise)) {
         openOrCreateQuizProgressWindow().catch(() => {});
       }
 
