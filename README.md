@@ -96,7 +96,7 @@ Modern Coursera courses include multi-turn conversational AI Coach exercises. Th
 *Read the full [Coursera Coach Dialogue Guide](docs/coursera-coach-dialogue.md).*
 
 ### AI-Assisted Coursera Quiz Solver
-The **AI-assisted Coursera quiz solver** parses quiz draft questions directly from the page DOM (handling multiple choice, checkboxes, and text inputs), evaluates questions using Google's official Gemini AI models, and selects matching options. The extension never automatically submits the quiz; learners retain full review authority before finalizing their attempt.
+The **AI-assisted Coursera quiz solver** parses quiz draft questions directly from the page DOM (handling multiple choice, checkboxes, and text inputs), evaluates questions using Google's official Gemini AI models, and selects matching options. The extension never automatically submits the quiz; learners retain full review authority before finalizing their attempt. Because the quiz solver depends on the Gemini API, temporary Gemini service availability issues can prevent quiz analysis. Retry later when the API is available again.
 *Read the full [AI Quiz Assistant Guide](docs/coursera-quiz-assistant.md).*
 
 ### Coursera Automation Workflow
@@ -139,6 +139,13 @@ Click the thumbnail below to view the official step-by-step setup walkthrough:
 
 > [!IMPORTANT]
 > **Privacy Guarantee:** Your Gemini API key is stored locally in extension storage and is transmitted directly to Google's official Gemini API endpoints solely when an AI quiz action is triggered. It is never routed through third-party servers, intermediate proxies, or external analytics services.
+
+> [!WARNING]
+> **Temporary Gemini API Availability:** Gemini API requests may occasionally fail with temporary service errors such as `503 Service Unavailable` when Google's Gemini backend is overloaded or temporarily unavailable. This does not necessarily mean that your API key is invalid.
+>
+> If the Quiz Solver shows a Gemini API `503` error, wait for some time and try again later. Avoid repeatedly submitting the quiz while the service is unavailable.
+>
+> If the problem continues, check your Google AI Studio project, API quota, and the Gemini service status before troubleshooting the extension itself.
 
 ---
 
