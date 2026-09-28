@@ -46,6 +46,13 @@
    - **Dialogue**: Automates and concludes interactive multi-turn Coach dialogue items.
    - **Solve Quiz**: Detects active quiz draft questions and fills answers using Gemini AI.
 
+> [!IMPORTANT]
+> **Important Note:**
+> - Large courses may occasionally require running **Video Completion** again.
+> - Coursera may take some time to reflect completed items.
+> - If completion is not visible immediately, **Refresh the Coursera page first** and check again.
+> - If it is still incomplete after refreshing, run **Video Completion** again.
+
 ---
 
 <a id="gemini-api-setup"></a>
