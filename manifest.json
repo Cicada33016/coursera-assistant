@@ -67,7 +67,6 @@
   },
   "host_permissions": [
     "*://*.coursera.org/*",
-    "https://generativelanguage.googleapis.com/*",
-    "https://raw.githubusercontent.com/*"
+    "https://generativelanguage.googleapis.com/*"
   ]
 }
