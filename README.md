@@ -18,7 +18,7 @@
   Built for learners seeking a reliable <strong>Coursera completion extension</strong>, <strong>Coursera video skipper</strong>, <strong>Coursera lecture completer</strong>, or all-in-one <strong>Coursera course automation</strong> companion, Coursera Assistant streamlines repetitive online course requirements while preserving complete user control.
 </p>
 
-[★ Star on GitHub](https://github.com/Cicada33016/coursera-assistant) • [Documentation](#documentation) • [Quick Start](#quick-start) • [Feature Modules](#feature-modules) • [Gemini Setup](#gemini-api-setup) • [FAQ](#troubleshooting--faq)
+[★ Star on GitHub](https://github.com/Cicada33016/coursera-assistant) • [Documentation](#documentation) • [Quick Start](#quick-start) • [Feature Modules](#feature-modules) • [AI Study Coach (Upcoming)](#upcoming-ai-study-coach) • [Gemini Setup](#gemini-api-setup) • [FAQ](#troubleshooting--faq)
 
 </div>
 
@@ -26,6 +26,18 @@
 
 > [!NOTE]
 > **Educational Reference Disclaimer:** Coursera Assistant is designed for study acceleration and practice. The AI Quiz Solver provides educational reference assistance powered by your personal Google Gemini API key. Always review answers before manual submission.
+
+> [!IMPORTANT]
+> ### 🔮 Next Major Evolution: AI Study Coach *(Coming Soon)*
+> **"The Quiz Solver gives you the answer. The AI Study Coach will help you understand why."**
+>
+> We're building the next evolution of Coursera Assistant: **Solve → Understand → Practice → Prepare**.
+>
+> *Not another answer bot. A coach that learns from what you just solved.*
+>
+> 🚀 *Don't just finish the quiz. Finish the quiz knowing more than when you started.*
+>
+> [**Explore what's planned in the AI Study Coach Preview ↓**](#upcoming-ai-study-coach)
 
 ---
 
@@ -98,6 +110,28 @@ Modern Coursera courses include multi-turn conversational AI Coach exercises. Th
 ### AI-Assisted Coursera Quiz Solver
 The **AI-assisted Coursera quiz solver** parses quiz draft questions directly from the page DOM (handling multiple choice, checkboxes, and text inputs), evaluates questions using Google's official Gemini AI models, and selects matching options. The extension never automatically submits the quiz; learners retain full review authority before finalizing their attempt. Because the quiz solver depends on the Gemini API, temporary Gemini service availability issues can prevent quiz analysis. Retry later when the API is available again.
 *Read the full [AI Quiz Assistant Guide](docs/coursera-quiz-assistant.md).*
+
+<a id="upcoming-ai-study-coach"></a>
+### 🔮 Upcoming Feature: AI Study Coach *(Coming Soon)*
+
+> [!TIP]
+> **The Next Evolution:** **Solve → Understand → Practice → Prepare**
+>
+> *The Quiz Solver gives you the answer. The AI Study Coach will help you understand why.*
+
+While the current **AI Quiz Solver** streamlines finding answers with Google Gemini, the upcoming **AI Study Coach** is envisioned as the next major step forward—transforming automated quiz assistance into personalized exam mastery. Rather than stopping at answer selection, the Coach will analyze the questions you've solved to actively teach, identify gaps, and prepare you for tests.
+
+> *"Not another answer bot. A coach that learns from what you just solved."*
+
+#### Key Capabilities in Development:
+* **Concept Explanations Behind Solved Questions**: Break down the core logic, principles, and underlying theory behind each solved question so you understand why an answer is correct.
+* **Identify Weak Areas & Knowledge Gaps**: Pinpoint recurring conceptual difficulties, tricky question patterns, and topics you struggle with.
+* **Targeted Practice Questions**: Generate on-demand drill questions specifically targeted to strengthen identified weak areas.
+* **Quiz-Activity Driven Reinforcement**: Continuously tailor explanations and practice using your actual quiz activity rather than generic study materials.
+* **Personalized Exam Preparation**: Turn previously solved course questions into structured review modules and exam-prep material.
+* **True Learning Over Passive Completion**: Empower students to genuinely learn and retain knowledge instead of simply checking off quiz boxes.
+
+> *"Don't just finish the quiz. Finish the quiz knowing more than when you started."*
 
 ### Coursera Automation Workflow
 Coursera Assistant offers a unified **Coursera course automation** experience by integrating video, reading, discussion, dialogue, and quiz capabilities into a single cohesive Manifest V3 extension.
