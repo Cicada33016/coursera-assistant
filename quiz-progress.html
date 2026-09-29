@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coursera Assistant — Quiz Solver</title>
+  <link rel="stylesheet" href="dist/ui/LatticeLoader.css">
   <link rel="stylesheet" href="dist/ui/quiz-progress.css">
 </head>
 <body>
@@ -20,7 +21,8 @@
     <!-- Main Dynamic Status Area -->
     <main class="progress-main">
       <div class="status-icon-wrapper">
-        <div id="spinner" class="spinner"></div>
+        <div id="latticeLoaderContainer"></div>
+        <div id="spinner" class="spinner" style="display: none;"></div>
         <div id="statusSymbolSuccess" class="status-symbol">✓</div>
         <div id="statusSymbolError" class="status-symbol">✕</div>
       </div>
@@ -62,6 +64,14 @@
     </footer>
   </div>
 
-  <script src="dist/scripts/quiz-progress.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "./LatticeLoader": "./dist/scripts/LatticeLoader.js",
+      "./LatticeLoader.js": "./dist/scripts/LatticeLoader.js"
+    }
+  }
+  </script>
+  <script type="module" src="dist/scripts/quiz-progress.js"></script>
 </body>
 </html>

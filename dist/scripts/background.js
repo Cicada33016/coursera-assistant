@@ -190,6 +190,18 @@
         clearTimeout(quizCloseTimeoutId);
         quizCloseTimeoutId = null;
       }
+      try {
+        chrome.tabs.query({}, (tabs) => {
+          if (chrome.runtime.lastError || !tabs) return;
+          for (const tab of tabs) {
+            if (tab && tab.id) {
+              chrome.tabs.sendMessage(tab.id, { action: "QUIZ_WINDOW_CLOSED" }, () => {
+                chrome.runtime.lastError;
+              });
+            }
+          }
+        });
+      } catch (_) {}
     }
   });
 

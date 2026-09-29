@@ -1817,6 +1817,31 @@
     let geminiInstance = null;
     let questionsJson = null;
     let isSolvingQuiz = false;
+    let isQuizCancelled = false;
+    let quizDelayCleanups = [];
+
+    function cancelActiveQuizDelays() {
+      while (quizDelayCleanups.length > 0) {
+        const cleanup = quizDelayCleanups.pop();
+        try { cleanup(); } catch (_) {}
+      }
+    }
+
+    function sleepCancellable(ms) {
+      return new Promise((resolve) => {
+        let timer = null;
+        const cleanup = () => {
+          if (timer) clearTimeout(timer);
+          resolve();
+        };
+        timer = setTimeout(() => {
+          const idx = quizDelayCleanups.indexOf(cleanup);
+          if (idx !== -1) quizDelayCleanups.splice(idx, 1);
+          resolve();
+        }, ms);
+        quizDelayCleanups.push(cleanup);
+      });
+    }
 
     function initGeminiClient() {
       if (geminiApiKey) {
@@ -1890,6 +1915,8 @@
     async function solveQuiz() {
       if (isSolvingQuiz) return;
       isSolvingQuiz = true;
+      isQuizCancelled = false;
+      cancelActiveQuizDelays();
 
       notifyQuizProgress("starting", { message: "Preparing quiz reasoning environment..." });
 
@@ -1935,7 +1962,43 @@
 
         showToast(`Analyzing questions using ${geminiModel || DEFAULT_QUIZ_MODEL}...`, "info");
 
-        const answers = await geminiInstance.solveQuestions(questionsJson);
+        // 3-Attempt Automatic Retry System
+        const MAX_QUIZ_ATTEMPTS = 3;
+        const RETRY_DELAYS = [0, 1000, 2000];
+        let answers = null;
+        let lastError = null;
+
+        for (let attempt = 1; attempt <= MAX_QUIZ_ATTEMPTS; attempt++) {
+          if (isQuizCancelled) {
+            console.log("[Quiz] Solving aborted: quiz window was closed");
+            return;
+          }
+
+          console.log(`[Quiz] Attempt ${attempt}/${MAX_QUIZ_ATTEMPTS}`);
+
+          try {
+            answers = await geminiInstance.solveQuestions(questionsJson);
+            console.log("[Quiz] Attempt succeeded");
+            break;
+          } catch (err) {
+            lastError = err;
+            if (attempt < MAX_QUIZ_ATTEMPTS) {
+              const delayMs = RETRY_DELAYS[attempt] || 1500;
+              await sleepCancellable(delayMs);
+              if (isQuizCancelled) {
+                console.log("[Quiz] Solving aborted during backoff delay: quiz window was closed");
+                return;
+              }
+            } else {
+              console.log(`[Quiz] All ${MAX_QUIZ_ATTEMPTS} attempts failed`);
+            }
+          }
+        }
+
+        if (!answers) {
+          throw lastError || new Error("All attempts failed to generate answers.");
+        }
+
         console.log("Gemini Answers:", answers);
 
         notifyQuizProgress("answers_ready", {
@@ -1986,6 +2049,7 @@
         notifyQuizProgress("error", { message: cleanMsg });
       } finally {
         isSolvingQuiz = false;
+        cancelActiveQuizDelays();
       }
     }
 
@@ -2100,6 +2164,16 @@
           }
           sendResponse({ received: true });
         })();
+        return true;
+      }
+
+      // Window close cancellation from background.js
+      if (request.action === "QUIZ_WINDOW_CLOSED") {
+        if (isSolvingQuiz) {
+          isQuizCancelled = true;
+          cancelActiveQuizDelays();
+        }
+        sendResponse({ received: true });
         return true;
       }
 

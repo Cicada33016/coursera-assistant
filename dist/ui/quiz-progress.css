@@ -110,14 +110,22 @@ body {
 
 .status-icon-wrapper {
   position: relative;
-  width: 48px;
-  height: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+}
+
+#latticeLoaderContainer {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .spinner {
+  display: none !important;
   width: 36px;
   height: 36px;
   border: 2.5px solid rgba(255, 255, 255, 0.08);

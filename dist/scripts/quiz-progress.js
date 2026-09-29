@@ -5,6 +5,8 @@
  * Receives QUIZ_PROGRESS runtime messages and updates the UI in real time.
  * Note: Solver logic is strictly isolated in content.js.
  */
+import LatticeLoader from './LatticeLoader';
+
 (() => {
   'use strict';
 
@@ -27,6 +29,38 @@
   const btnSettings = document.getElementById("btnSettings");
   const btnDismiss = document.getElementById("btnDismiss");
   const footerHint = document.getElementById("footerHint");
+  const latticeLoaderContainer = document.getElementById("latticeLoaderContainer");
+
+  // Mount LatticeLoader with exact React Bits configuration
+  let loader = null;
+  const LoaderComponent = typeof LatticeLoader !== "undefined" ? LatticeLoader : (typeof window !== "undefined" ? window.LatticeLoader : null);
+  if (latticeLoaderContainer && LoaderComponent) {
+    try {
+      loader = LoaderComponent.create({
+        status: "working",
+        label: "Thinking",
+        doneLabel: "Done in",
+        errorLabel: "Failed after",
+        pattern: "orbit",
+        grid: 3,
+        shape: "round",
+        doneColor: "#22c55e",
+        errorColor: "#ef4444",
+        cellSize: 6,
+        gap: 2,
+        fontSize: 14,
+        step: 90,
+        idleOpacity: 0.15,
+        glow: false,
+        glowColor: "",
+        showTimer: true,
+        color: "#f5f5f5"
+      });
+      latticeLoaderContainer.appendChild(loader.element);
+    } catch (e) {
+      console.warn("[Quiz Progress] Failed to mount LatticeLoader:", e);
+    }
+  }
 
   function setModelDisplay(modelId) {
     if (!modelBadge) return;
@@ -50,13 +84,14 @@
       setModelDisplay(model);
     }
 
-    if (spinner) spinner.style.display = "block";
+    if (spinner) spinner.style.display = "none";
     if (statusSymbolSuccess) statusSymbolSuccess.className = "status-symbol";
     if (statusSymbolError) statusSymbolError.className = "status-symbol";
     if (btnSettings) btnSettings.style.display = "none";
 
     switch (state) {
       case "starting":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Initializing...";
         if (statusSubtitle) statusSubtitle.textContent = message || "Preparing quiz reasoning environment...";
         if (stepBarFill) stepBarFill.style.width = "10%";
@@ -66,6 +101,7 @@
         break;
 
       case "loading_questions":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Extracting questions...";
         if (statusSubtitle) statusSubtitle.textContent = message || "Reading question draft from Coursera...";
         if (stepBarFill) stepBarFill.style.width = "25%";
@@ -73,6 +109,7 @@
         break;
 
       case "questions_ready":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Questions indexed";
         if (statusSubtitle) {
           const detail = total ? `Discovered ${total} questions to solve.` : "Quiz questions successfully indexed.";
@@ -84,6 +121,7 @@
         break;
 
       case "solving":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "AI reasoning in progress...";
         if (statusSubtitle) statusSubtitle.textContent = message || "Gemini is analyzing questions and verifying answers...";
         if (stepBarFill) stepBarFill.style.width = "65%";
@@ -92,6 +130,7 @@
         break;
 
       case "answers_ready":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Answers ready";
         if (statusSubtitle) statusSubtitle.textContent = message || "Answers verified and ready to apply.";
         if (stepBarFill) stepBarFill.style.width = "80%";
@@ -101,6 +140,7 @@
         break;
 
       case "filling_answers":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Applying answers...";
         if (statusSubtitle) {
           const countDetail = (current !== undefined && total) ? `Applying answer ${current} of ${total}...` : "Injecting correct options into DOM...";
@@ -113,6 +153,7 @@
         break;
 
       case "submitting":
+        if (loader) loader.update({ status: "working", label: "Thinking" });
         if (statusTitle) statusTitle.textContent = "Verifying options...";
         if (statusSubtitle) statusSubtitle.textContent = message || "Answer choices selected. Verifying attempt...";
         if (stepBarFill) stepBarFill.style.width = "95%";
@@ -122,6 +163,7 @@
         break;
 
       case "completed":
+        if (loader) loader.update({ status: "done" });
         if (spinner) spinner.style.display = "none";
         if (statusSymbolSuccess) statusSymbolSuccess.className = "status-symbol success";
         if (statusTitle) statusTitle.textContent = "Quiz completed";
@@ -141,6 +183,7 @@
         break;
 
       case "error":
+        if (loader) loader.update({ status: "error" });
         if (spinner) spinner.style.display = "none";
         if (statusSymbolError) statusSymbolError.className = "status-symbol error";
         if (statusTitle) statusTitle.textContent = "Unable to complete quiz";
@@ -190,7 +233,12 @@
 
   // Button actions
   btnDismiss?.addEventListener("click", () => {
+    if (loader) loader.destroy();
     window.close();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    if (loader) loader.destroy();
   });
 
   btnSettings?.addEventListener("click", () => {
