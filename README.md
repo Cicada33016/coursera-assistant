@@ -24,6 +24,20 @@ A streamlined browser extension that automates lecture progress, supplemental re
 
 ---
 
+<div align="center">
+
+### 🎥 See Coursera Assistant in Action
+
+A quick walkthrough of the extension's core features and workflow.
+
+<br>
+
+[![Coursera Assistant Demo Video](https://img.youtube.com/vi/dAG7kG4mE8s/maxresdefault.jpg)](https://youtu.be/dAG7kG4mE8s?si=u6_M0pvs3rbzqpNX)
+
+</div>
+
+---
+
 ## What is Coursera Assistant?
 
 Coursera Assistant is a lightweight Google Chrome extension designed to help students navigate online courses with less friction. It handles routine course actions that consume unnecessary study time—such as waiting out video playback timers, acknowledging short reading pages, submitting required discussion prompts, and stepping through structured Coach dialogues.
