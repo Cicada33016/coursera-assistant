@@ -28,7 +28,7 @@ A streamlined browser extension that automates lecture progress, supplemental re
 
 ### 🎥 See Coursera Assistant in Action
 
-A quick walkthrough of the extension's core features and workflow.
+A quick walkthrough of the extension's core features and workflow. Click👇
 
 <br>
 
