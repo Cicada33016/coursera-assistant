@@ -28,13 +28,42 @@ A streamlined browser extension that automates lecture progress, supplemental re
 
 ### 🎥 See Coursera Assistant in Action
 
-A quick walkthrough of the extension's core features and workflow. Click👇
+Step-by-step setup walkthrough and live demonstration of core automation features.
+
+</div>
 
 <br>
 
-[![Coursera Assistant Demo Video](https://img.youtube.com/vi/dAG7kG4mE8s/maxresdefault.jpg)](https://youtu.be/dAG7kG4mE8s?si=u6_M0pvs3rbzqpNX)
-
-</div>
+<table>
+  <tr>
+    <th width="50%" align="center">📘 Tutorial: Extension Setup</th>
+    <th width="50%" align="center">🎥 Demo: Features in Action</th>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <a href="https://www.youtube.com/watch?v=xiT8c8M1OIw">
+        <img src="https://img.youtube.com/vi/xiT8c8M1OIw/maxresdefault.jpg" alt="Tutorial: How to Load Unpacked Extension in Chrome" width="100%">
+      </a>
+      <br><br>
+      <a href="https://www.youtube.com/watch?v=xiT8c8M1OIw">
+        <img src="https://img.shields.io/badge/▶_Watch_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Setup Tutorial on YouTube">
+      </a>
+      <br><br>
+      <p>Step-by-step walkthrough for loading the unpacked extension in Google Chrome Developer Mode.</p>
+    </td>
+    <td align="center" valign="top">
+      <a href="https://www.youtube.com/watch?v=dAG7kG4mE8s">
+        <img src="https://img.youtube.com/vi/dAG7kG4mE8s/maxresdefault.jpg" alt="Coursera Assistant Feature Demonstration Video" width="100%">
+      </a>
+      <br><br>
+      <a href="https://www.youtube.com/watch?v=dAG7kG4mE8s">
+        <img src="https://img.shields.io/badge/▶_Watch_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Feature Demo on YouTube">
+      </a>
+      <br><br>
+      <p>Live demonstration of course automation, reading completion, discussion replies, and AI quiz assistance.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
