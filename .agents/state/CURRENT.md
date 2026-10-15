@@ -1,19 +1,23 @@
 # CURRENT — Active Milestone & Implementation Status
 
-## Milestone: Engineering Environment Bootstrap & Context Establishment
+## Milestone: Baseline Regression Audit & Defect Rectification
 
-- **Goal:** Recover machine state, fix verified toolchain issues, verify Ollama auto-start, index project memory in Infimium, curate engineering skills, establish repository-backed AI context, and prepare the workspace for development.
-- **Status:** Complete (Validation Phase).
+- **Goal:** Establish a complete regression test suite covering all critical workflows (Video, Reading, Coach, Gemini Quiz, Gemini Proxy, DOM Robustness), isolate and reproduce confirmed defects using TDD, apply surgical Karpathy-compliant fixes, and verify full system health.
+- **Status:** Complete (Validation & Synchronization Phase).
 
 ### Implementation Checklist
-- [x] Inspect toolchains: Node 24.19.0, npm 11.17.0, Python 3.12.10, Git 2.55.0, Chrome, gh 2.102.0.
-- [x] Diagnose & repair Infimium crash: Smart App Control DLL policy blocking `@sengac/tree-sitter` resolved via surgical lazy-loading in `code-parser.js` and `dep-graph.js`.
-- [x] Verify Ollama running & serving at `http://127.0.0.1:11434`.
-- [x] Test `nomic-embed-text` embedding generation (768-dim vector verified).
-- [x] Configure Ollama Windows login auto-startup under `HKCU:\Software\Microsoft\Windows\CurrentVersion\Run`.
-- [x] Clone canonical repository `https://github.com/Cicada33016/coursera-assistant.git` into workspace root.
-- [x] Initialize Infimium workspace (`infimium.workspace.json`) and run full project indexing (6/6 doctor checks passing).
-- [x] Verify semantic search & episodic memory persistence.
-- [x] Curate & install high-quality skills (`karpathy-guidelines`, Vercel guidelines, Superpowers).
-- [x] Create project-specific engineering skill `coursera-assistant-engineering`.
-- [x] Establish shared context system: `AGENTS.md`, `AI_CONTEXT.md`, `.agents/state/`, `.agents/decisions/`.
+- [x] Phase 1: Secure Context Commit (`55b440a` pushed and synchronized with `origin/main`).
+- [x] Phase 2: Establish Baseline (`node --check` syntax verification and `manifest.json` integrity check passed).
+- [x] Phase 3: Test Critical Workflows (Created 6 test suites under `tests/` using Node.js built-in `node:test` and `node:assert`, without external npm dependencies).
+- [x] Phase 4: Fix Confirmed Defects via TDD:
+  - [x] Fix 1: Gemini response body stream consumption in `inspectResponse` (`dist/scripts/content.js`). Caches `res._cachedRawText` to prevent stream-exhausted empty reads on status 429.
+  - [x] Fix 2: `putVideoProgress` silent failure on HTTP errors (`dist/scripts/background.js`). Checks `res.ok` and returns boolean status.
+  - [x] Fix 3: Premature queue advancement in Coach dialogue (`dist/scripts/content.js`). Removed invalid `else if (isQueued)` queue advance branch; now notifies user without false queue advancement.
+  - [x] Fix 4: GEMINI_PROXY_FETCH request hang protection (`dist/scripts/background.js`). Added 30-second `AbortSignal.timeout(30000)` deadline and query parameter API key masking in error catches.
+  - [x] Fix 5: DOM selector brittleness (`dist/scripts/content.js`). Added semantic fallback selectors (`div[data-testid='part-Submission_Part']`, etc.) for quiz questions.
+- [x] Phase 5: Validate Patch:
+  - Full test suite execution: 24/24 tests passing.
+  - Syntax check: `node --check` passed on all runtime scripts.
+  - Manifest integrity check: 10/10 referenced files verified on disk.
+  - Student safety invariant verified: Graded assessments are never auto-submitted.
+- [x] Phase 6: Synchronize Project Context & Push to GitHub.

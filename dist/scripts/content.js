@@ -711,9 +711,8 @@
       if (isCompleted()) {
         toastManager?.success("✓ Coach Dialogue completed!");
         await advanceDialogueQueue(courseSlug, storedQueue);
-      } else if (isQueued) {
-        toastManager?.info("Advancing to next dialogue in queue...");
-        await advanceDialogueQueue(courseSlug, storedQueue);
+      } else {
+        toastManager?.info("Coach Dialogue did not complete within turn limit.");
       }
     };
 
@@ -1656,9 +1655,14 @@
 
         const inspectResponse = async (res) => {
           let text = "";
-          try {
-            text = await res.text();
-          } catch (_) {}
+          if (res && res._cachedRawText !== undefined) {
+            text = res._cachedRawText;
+          } else {
+            try {
+              text = await res.text();
+              if (res) res._cachedRawText = text;
+            } catch (_) {}
+          }
           let parsedMsg = "";
           let isLimitZero = false;
           try {
@@ -1671,7 +1675,7 @@
           } catch (_) {}
           return {
             rawText: text,
-            message: parsedMsg || text || res.statusText || String(res.status),
+            message: parsedMsg || text || res?.statusText || String(res?.status || ""),
             isLimitZero: isLimitZero
           };
         };
@@ -2056,7 +2060,12 @@
     function fillQuizAnswersInDOM(aiAnswers, onProgress) {
       if (!aiAnswers || !Array.isArray(aiAnswers)) return false;
 
-      const questionElements = document.querySelectorAll("div.css-1tfphom");
+      let questionElements = document.querySelectorAll("div.css-1tfphom");
+      if (!questionElements || questionElements.length === 0) {
+        questionElements = document.querySelectorAll(
+          "div[data-testid='part-Submission_Part'], div[data-testid='question-prompt'], fieldset.cds-formGroup, .c-question"
+        );
+      }
       if (!questionElements || questionElements.length === 0) {
         showToast("Could not locate quiz questions on this page.", "error");
         return false;

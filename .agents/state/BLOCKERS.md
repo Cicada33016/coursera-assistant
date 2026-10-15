@@ -2,11 +2,11 @@
 
 ## External Prerequisites & Unverified Constraints
 
-1. **GitHub CLI Unauthenticated:**
-   - `gh auth status` indicates no active user session.
-   - Pushing context commits to GitHub remote requires valid credentials or SSH keys. If remote pushing is blocked, commits remain safe in the local Git repository.
+1. **Live Coursera Authenticated Session:**
+   - Real-world interaction with Coursera's production backend requires an authenticated student account enrolled in active courses.
+   - Per safety guidelines and audit protocol, offline test harnesses and DOM mocks were used. Real student session interaction remains unexecuted and must be performed with user consent.
 2. **Reboot Persistence for Ollama:**
-   - Startup registry key configured under `HKCU:\Software\Microsoft\Windows\CurrentVersion\Run`.
-   - Conclusive verification that Ollama starts on fresh Windows sign-in requires an actual reboot/sign-in event, marked as **PENDING VERIFICATION**.
-3. **Live Coursera Session Verification:**
-   - End-to-end browser automation against live Coursera courses requires authenticated student credentials and an active course session, which cannot be executed automatically during offline bootstrap.
+   - Startup registry entry is configured under `HKCU:\Software\Microsoft\Windows\CurrentVersion\Run`. Fresh system reboot validation remains marked as **PENDING VERIFICATION**.
+3. **Resolved Items:**
+   - *GitHub Authentication:* Authenticated via `gh auth setup-git` as `Cicada33016`; remote fast-forward push confirmed.
+   - *Infimium Runtime:* Smart App Control native module resolution patched via lazy loading; vector database operational.

@@ -56,12 +56,13 @@
 
 ## 5. Verified Implementation State
 
-- **Video Progress Engine:** Implemented with `postVideoEvent` (`play`/`ended` signals) and `putVideoProgress` API sync.
-- **Reading Automation:** Implemented with scroll simulation and completion verification.
-- **Discussion Assistant:** Implemented with canned response generation and forum API calls.
-- **Coach Dialogue:** Implemented with input event dispatching, DOM polling, and 35-second barrier wait.
-- **Quiz Assistant:** Implemented with 3-attempt retry loop (`c89bf52`), single-flight window creation lock (`1bb539c`), LatticeLoader integration, and Gemini prompt synthesis.
-- **Answer Selection Safety:** Answers are selected in the DOM for student review; final submission is explicitly NOT automated on graded quizzes.
+- **Video Progress Engine:** Verified with unit test harness (`tests/video-completion.test.js`). `putVideoProgress` checks `res.ok` status and logs failures.
+- **Reading Automation:** Verified with unit test harness (`tests/reading-completion.test.js`). Handles 200/201/204, numeric vs string userId fallback, and partial failures.
+- **Coach Dialogue:** Verified with unit test harness (`tests/coach-dialogue.test.js`). Adheres to `TARGET_GENUINE_TURNS` limit, tolerates missing textareas and loader hangs, and never advances queue without terminal completion.
+- **Quiz Assistant:** Verified with unit test harness (`tests/gemini-quiz.test.js`). Response body consumption bug in `inspectResponse` resolved via caching. Fallback to default model on 404/quota-zero verified.
+- **Gemini Proxy Service Worker:** Verified with unit test harness (`tests/gemini-proxy.test.js`). Enforces destination authorization, 30s deadline timeout, status propagation, and API key sanitization.
+- **DOM & Selector Robustness:** Verified with unit test harness (`tests/dom-robustness.test.js`). Fallback semantic selectors (`data-testid='part-Submission_Part'`, etc.) prevent failure when Coursera class hashes change.
+- **Answer Selection Safety:** Invariant preserved: answers are selected in the DOM for student review; final submission is explicitly NOT automated on graded assessments.
 
 ---
 
@@ -75,20 +76,22 @@
 
 ## 7. Known Risks, Bugs & Constraints
 
-1. **Coursera DOM Fragility:** Coursera class names (e.g. `css-1tfphom`) frequently shift across platform releases. Heuristic selectors must fall back gracefully to `data-testid` and ARIA attributes.
-2. **Gemini API Key Exposure Risk:** API keys must never be logged or echoed in toast error messages. Sanitization via `cleanMsg.split(geminiApiKey).join("[REDACTED]")` is strictly enforced.
+1. **Coursera DOM Fragility:** Coursera class names (e.g. `css-1tfphom`) frequently shift across platform releases. Resilient fallback selectors (`div[data-testid='part-Submission_Part']`, `fieldset.cds-formGroup`) provide defense-in-depth.
+2. **Gemini API Key Exposure Risk:** API keys must never be logged or echoed. Sanitization via `[REDACTED]` is enforced across content scripts, service worker proxies, and test runners.
 3. **Smart App Control Policy on Windows:** Global `infimium` CLI required lazy-loading for `@sengac/tree-sitter` to avoid Windows Smart App Control blocking unsigned native `.node` addons.
+4. **Live Coursera Sessions:** Verification was performed using Node.js unit tests and mock DOM environments. End-to-end testing against real authenticated Coursera sessions must be performed with live student credentials.
 
 ---
 
 ## 8. Exact Next Development Task
 
-- **Task:** Comprehensive extension health check and regression verification on Coursera item types (video, reading, coach, quiz) using automated DOM mocking or staging fixtures.
-- **Files to Inspect:** `dist/scripts/content.js`, `dist/scripts/background.js`, `manifest.json`.
+- **Task:** Chrome Extension End-to-End Staging Validation in Chrome Developer Mode.
+- **Files to Inspect:** `dist/manifest.json`, `dist/popup.html`, `dist/settings.html`, `dist/scripts/content.js`.
 - **Acceptance Criteria:**
-  1. All JavaScript files pass `node --check`.
-  2. All permissions in `manifest.json` match required API surfaces.
-  3. No unredacted keys or unbounded recursive loops exist.
+  1. Load unpacked extension in Chrome with zero manifest warnings.
+  2. Options page successfully reads/writes to `chrome.storage.local`.
+  3. Action popup renders cleanly with active model selector.
+  4. Content script communication with service worker passes runtime checks.
 
 ---
 

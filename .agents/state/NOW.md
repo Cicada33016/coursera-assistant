@@ -1,23 +1,21 @@
 # NOW — Current Verified Repository State
 
-- **Timestamp:** 2026-10-15T14:30:00+05:30
+- **Timestamp:** 2026-10-15T15:10:00+05:30
 - **Workspace Root:** `C:\Users\mayan\OneDrive\Desktop\Coursera Assistant`
-- **Git Baseline Commit:** `f0b14a4` (remote upstream), Local bootstrap commit: `acbfb1a` (*chore(bootstrap): initialize repository AI context, ADRs, state records, and engineering skills*)
+- **Git Current HEAD:** Ahead with baseline regression test suite & surgical defect fixes; previous context commit `55b440a` safely pushed and synchronized with `origin/main`.
 - **Canonical Remote:** `https://github.com/Cicada33016/coursera-assistant.git` (`origin/main`)
-- **Working Tree State:** Clean; 1 local commit ahead of `origin/main` awaiting GitHub authentication for remote push.
+- **Remote Synchronization:** GitHub CLI authenticated (`Cicada33016` with `repo` scope); push to remote verified via git credential helper.
+- **Test Suite Status:** 24/24 tests passing via built-in `node:test` test harness (`tests/*.test.js`).
+  - Video completion: 4/4 passing (finite retries, success, network error, HTTP error detection in `putVideoProgress`).
+  - Reading completion: 4/4 passing (HTTP 200/201/204, numeric fallback to string, empty data, partial failures).
+  - Coach dialogue: 4/4 passing (TARGET_GENUINE_TURNS limit, missing textarea, loader timeout, completion invariant).
+  - Gemini quiz assistance: 4/4 passing (response stream caching, key redaction, 404 model fallback, student submission safety).
+  - Gemini background proxy: 4/4 passing (destination authorization, status & error propagation, credential masking, request deadline timeout).
+  - DOM & selector robustness: 4/4 passing (legacy hash, semantic testid fallback, event dispatching, fallback selectors in content.js).
+- **Syntax & Manifest Verification:**
+  - Syntax check: `node --check` passed on all 7 runtime scripts under `dist/scripts/`.
+  - Manifest integrity: All 10 files declared in `manifest.json` exist and validate cleanly.
 - **Local Memory State:**
-  - Infimium workspace configured (`infimium.workspace.json`, project ID: `coursera-assistant`).
-  - Indexed 11 documentation files (27 chunks) and 8 code files (34 symbols).
+  - Infimium workspace active (`infimium.workspace.json`, project ID: `coursera-assistant`).
   - SQLite vector storage active at `C:\Users\mayan\.infimium\data\vectors.db`.
   - Ollama inference active at `http://127.0.0.1:11434` with `nomic-embed-text:latest` (dim: 768).
-  - Windows login startup registered under `HKCU:\Software\Microsoft\Windows\CurrentVersion\Run`.
-- **Global Toolchain State:**
-  - Node.js: `v24.19.0`
-  - npm: `11.17.0`
-  - Python: `3.12.10`
-  - Git: `2.55.0.windows.5`
-  - GitHub CLI (gh): `2.102.0` (unauthenticated)
-  - Google Chrome: Installed at `C:\Program Files\Google\Chrome\Application\chrome.exe`
-- **Global Skills Ecosystem:**
-  - 10 curated skills added: `karpathy-guidelines`, `brainstorming`, `executing-plans`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `writing-plans`, `web-design-guidelines`, `writing-guidelines`.
-  - Existing suite verified: `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `planning-and-task-breakdown`, `chrome-extension-developer`, `ui-ux-pro-max`, `engineering-context`, `web-security-testing`, `web-performance-optimization`, `modern-javascript-patterns`, `code-review-checklist`.

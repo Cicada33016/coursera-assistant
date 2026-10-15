@@ -88,7 +88,7 @@
    * Creates the required server-side video progress record via PUT onDemandVideoProgresses.v1
    */
   async function putVideoProgress(userId, courseId, videoId, timeCommitment) {
-    if (!videoId) return;
+    if (!videoId) return false;
     const viewedUpTo = Math.floor(timeCommitment || 0);
     const videoProgressId = `${userId}~${courseId}~${videoId}`;
     const url = `${COURSERA_API_BASE}/onDemandVideoProgresses.v1/${videoProgressId}`;
@@ -98,14 +98,20 @@
         viewedUpTo: viewedUpTo,
         videoProgressId: videoProgressId
       };
-      await fetch(url, {
+      const res = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(payload)
       });
+      if (!res.ok) {
+        console.warn(`[Skip Video+] PUT video progress responded with status ${res.status}`);
+        return false;
+      }
+      return true;
     } catch (err) {
       console.warn("[Skip Video+] Failed to PUT video progress:", err);
+      return false;
     }
   }
 
@@ -324,7 +330,14 @@
             sendResponse({ error: "Unauthorized destination host" });
             return;
           }
-          const fetchRes = await fetch(url, options || {});
+
+          // Explicit request deadline to prevent indefinite background hangs
+          const fetchOptions = { ...(options || {}) };
+          if (!fetchOptions.signal && typeof AbortSignal !== "undefined" && AbortSignal.timeout) {
+            fetchOptions.signal = AbortSignal.timeout(30000);
+          }
+
+          const fetchRes = await fetch(url, fetchOptions);
           const bodyText = await fetchRes.text();
           sendResponse({
             ok: fetchRes.ok,
@@ -333,8 +346,11 @@
             text: bodyText
           });
         } catch (netErr) {
+          // Credential hygiene: sanitize any API key in query parameters or error message
+          const rawMsg = netErr?.message || "Network request failed in background worker";
+          const sanitizedMsg = rawMsg.replace(/([?&]key=)[^&\s]+/gi, "$1[REDACTED]");
           sendResponse({
-            error: netErr.message || "Network request failed in background worker"
+            error: sanitizedMsg
           });
         }
       })();
