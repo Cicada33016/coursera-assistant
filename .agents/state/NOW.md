@@ -1,0 +1,23 @@
+# NOW — Current Verified Repository State
+
+- **Timestamp:** 2026-10-15T14:30:00+05:30
+- **Workspace Root:** `C:\Users\mayan\OneDrive\Desktop\Coursera Assistant`
+- **Git Baseline Commit:** `f0b14a4` (remote upstream), Local bootstrap commit: `acbfb1a` (*chore(bootstrap): initialize repository AI context, ADRs, state records, and engineering skills*)
+- **Canonical Remote:** `https://github.com/Cicada33016/coursera-assistant.git` (`origin/main`)
+- **Working Tree State:** Clean; 1 local commit ahead of `origin/main` awaiting GitHub authentication for remote push.
+- **Local Memory State:**
+  - Infimium workspace configured (`infimium.workspace.json`, project ID: `coursera-assistant`).
+  - Indexed 11 documentation files (27 chunks) and 8 code files (34 symbols).
+  - SQLite vector storage active at `C:\Users\mayan\.infimium\data\vectors.db`.
+  - Ollama inference active at `http://127.0.0.1:11434` with `nomic-embed-text:latest` (dim: 768).
+  - Windows login startup registered under `HKCU:\Software\Microsoft\Windows\CurrentVersion\Run`.
+- **Global Toolchain State:**
+  - Node.js: `v24.19.0`
+  - npm: `11.17.0`
+  - Python: `3.12.10`
+  - Git: `2.55.0.windows.5`
+  - GitHub CLI (gh): `2.102.0` (unauthenticated)
+  - Google Chrome: Installed at `C:\Program Files\Google\Chrome\Application\chrome.exe`
+- **Global Skills Ecosystem:**
+  - 10 curated skills added: `karpathy-guidelines`, `brainstorming`, `executing-plans`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `writing-plans`, `web-design-guidelines`, `writing-guidelines`.
+  - Existing suite verified: `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `planning-and-task-breakdown`, `chrome-extension-developer`, `ui-ux-pro-max`, `engineering-context`, `web-security-testing`, `web-performance-optimization`, `modern-javascript-patterns`, `code-review-checklist`.

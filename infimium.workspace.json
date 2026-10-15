@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "Coursera Assistant",
+  "projects": [
+    {
+      "id": "coursera-assistant",
+      "path": ".",
+      "role": "app",
+      "dependsOn": []
+    }
+  ]
+}
