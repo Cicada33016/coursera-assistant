@@ -5,7 +5,7 @@
  * Receives QUIZ_PROGRESS runtime messages and updates the UI in real time.
  * Note: Solver logic is strictly isolated in content.js.
  */
-import LatticeLoader from './LatticeLoader';
+import LatticeLoader from './LatticeLoader.js';
 
 (() => {
   'use strict';

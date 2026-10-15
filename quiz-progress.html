@@ -68,7 +68,15 @@
   {
     "imports": {
       "./LatticeLoader": "./dist/scripts/LatticeLoader.js",
-      "./LatticeLoader.js": "./dist/scripts/LatticeLoader.js"
+      "./LatticeLoader.js": "./dist/scripts/LatticeLoader.js",
+      "./dist/scripts/LatticeLoader": "./dist/scripts/LatticeLoader.js",
+      "./dist/scripts/LatticeLoader.js": "./dist/scripts/LatticeLoader.js"
+    },
+    "scopes": {
+      "./dist/scripts/": {
+        "./LatticeLoader": "./dist/scripts/LatticeLoader.js",
+        "./LatticeLoader.js": "./dist/scripts/LatticeLoader.js"
+      }
     }
   }
   </script>

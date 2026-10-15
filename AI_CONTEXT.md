@@ -19,8 +19,8 @@
 
 - **Canonical Remote:** `https://github.com/Cicada33016/coursera-assistant.git`
 - **Default Branch:** `main`
-- **Active Working Tree:** Clean; 1 local commit ahead of `origin/main` (local bootstrap commit: `acbfb1a`).
-- **Commit Baseline:** Remote upstream `f0b14a4` (*docs: integrate tutorial walkthrough and demo video cards in README*); local head `acbfb1a`.
+- **Active Working Tree:** Clean; synchronized with `origin/main` at commit `7b00f554d8d5f9c4e3dedbf06c3576849dd9b991`.
+- **Commit Baseline:** Remote upstream `7b00f55` (*fix(audit): resolve response stream consumption, video progress error handling, and selector resilience*); local HEAD `7b00f55`.
 - **Branching Policy:** Work directly on `main` for verified incremental releases, or feature branches for multi-step tasks. Never force-push (`--force`) or rewrite remote history.
 
 ---
@@ -56,6 +56,11 @@
 
 ## 5. Verified Implementation State
 
+- **Staging Validation (Chrome 155):** Validated in Google Chrome 155.0.8059.79 on Windows 11. Manifest V3 root configuration accepted with zero manifest warnings or errors.
+- **ES Module Resolution Fix:** Resolved ES module extensionless import in `dist/scripts/quiz-progress.js` (`./LatticeLoader.js`) and enhanced `importmap` in `quiz-progress.html` with scoped mappings to prevent HTTP 404 in browser module loading.
+- **Popup Non-Coursera Resilience:** Added safe `chrome.runtime.lastError` callback consumption to `dist/scripts/popup.js` for non-Coursera tab graceful degradation.
+- **Options & Storage Persistence:** Validated in real Chrome browser via CDP. Verified `geminiModelSelect`, `geminiAutoQuizToggle`, `geminiKeyInput`, `speedInput`, and save feedback persist across reloads using keys `key`, `model`, `quiz`, and sync `s`.
+- **Progress Window DOM & Loader:** Verified in real Chrome browser via CDP. `quiz-progress.html` loads, displays `Gemini 3 Flash` badge, and dynamically mounts `LatticeLoader` with 18 rendered cells and zero console errors.
 - **Video Progress Engine:** Verified with unit test harness (`tests/video-completion.test.js`). `putVideoProgress` checks `res.ok` status and logs failures.
 - **Reading Automation:** Verified with unit test harness (`tests/reading-completion.test.js`). Handles 200/201/204, numeric vs string userId fallback, and partial failures.
 - **Coach Dialogue:** Verified with unit test harness (`tests/coach-dialogue.test.js`). Adheres to `TARGET_GENUINE_TURNS` limit, tolerates missing textareas and loader hangs, and never advances queue without terminal completion.
@@ -63,6 +68,7 @@
 - **Gemini Proxy Service Worker:** Verified with unit test harness (`tests/gemini-proxy.test.js`). Enforces destination authorization, 30s deadline timeout, status propagation, and API key sanitization.
 - **DOM & Selector Robustness:** Verified with unit test harness (`tests/dom-robustness.test.js`). Fallback semantic selectors (`data-testid='part-Submission_Part'`, etc.) prevent failure when Coursera class hashes change.
 - **Answer Selection Safety:** Invariant preserved: answers are selected in the DOM for student review; final submission is explicitly NOT automated on graded assessments.
+- **Test Suite Status:** 28/28 tests passing (`tests/*.test.js`).
 
 ---
 
@@ -79,19 +85,18 @@
 1. **Coursera DOM Fragility:** Coursera class names (e.g. `css-1tfphom`) frequently shift across platform releases. Resilient fallback selectors (`div[data-testid='part-Submission_Part']`, `fieldset.cds-formGroup`) provide defense-in-depth.
 2. **Gemini API Key Exposure Risk:** API keys must never be logged or echoed. Sanitization via `[REDACTED]` is enforced across content scripts, service worker proxies, and test runners.
 3. **Smart App Control Policy on Windows:** Global `infimium` CLI required lazy-loading for `@sengac/tree-sitter` to avoid Windows Smart App Control blocking unsigned native `.node` addons.
-4. **Live Coursera Sessions:** Verification was performed using Node.js unit tests and mock DOM environments. End-to-end testing against real authenticated Coursera sessions must be performed with live student credentials.
+4. **Live Coursera Sessions:** Verification was performed using real Chrome CDP staging harnesses and Node.js unit tests. Automation against a live authenticated student account was intentionally omitted during staging per safety protocol.
 
 ---
 
 ## 8. Exact Next Development Task
 
-- **Task:** Chrome Extension End-to-End Staging Validation in Chrome Developer Mode.
-- **Files to Inspect:** `dist/manifest.json`, `dist/popup.html`, `dist/settings.html`, `dist/scripts/content.js`.
+- **Task:** End-to-End Live Coursera Pilot or Next Feature Milestone.
+- **Files to Inspect:** `dist/scripts/content.js`, `dist/scripts/background.js`, `dist/scripts/interceptor.js`.
 - **Acceptance Criteria:**
-  1. Load unpacked extension in Chrome with zero manifest warnings.
-  2. Options page successfully reads/writes to `chrome.storage.local`.
-  3. Action popup renders cleanly with active model selector.
-  4. Content script communication with service worker passes runtime checks.
+  1. Validate content script injection and toast notifications on live Coursera course pages (`https://www.coursera.org/learn/*`).
+  2. Test video progress sync against real video player events.
+  3. Validate quiz answer suggestions in DOM under explicit user supervision without submitting.
 
 ---
 

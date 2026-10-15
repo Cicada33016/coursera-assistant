@@ -1,23 +1,31 @@
 # CURRENT — Active Milestone & Implementation Status
 
-## Milestone: Baseline Regression Audit & Defect Rectification
+## Milestone: Chrome Extension Staging Validation & Runtime Hardening
 
-- **Goal:** Establish a complete regression test suite covering all critical workflows (Video, Reading, Coach, Gemini Quiz, Gemini Proxy, DOM Robustness), isolate and reproduce confirmed defects using TDD, apply surgical Karpathy-compliant fixes, and verify full system health.
+- **Goal:** Validate the unpacked Chrome Manifest V3 extension package in Google Chrome Developer Mode, verify options page storage lifecycle, test popup UI and non-Coursera tab resilience, verify quiz progress window DOM and module loading, fix verified staging defects, and synchronize context.
 - **Status:** Complete (Validation & Synchronization Phase).
 
 ### Implementation Checklist
-- [x] Phase 1: Secure Context Commit (`55b440a` pushed and synchronized with `origin/main`).
-- [x] Phase 2: Establish Baseline (`node --check` syntax verification and `manifest.json` integrity check passed).
-- [x] Phase 3: Test Critical Workflows (Created 6 test suites under `tests/` using Node.js built-in `node:test` and `node:assert`, without external npm dependencies).
-- [x] Phase 4: Fix Confirmed Defects via TDD:
-  - [x] Fix 1: Gemini response body stream consumption in `inspectResponse` (`dist/scripts/content.js`). Caches `res._cachedRawText` to prevent stream-exhausted empty reads on status 429.
-  - [x] Fix 2: `putVideoProgress` silent failure on HTTP errors (`dist/scripts/background.js`). Checks `res.ok` and returns boolean status.
-  - [x] Fix 3: Premature queue advancement in Coach dialogue (`dist/scripts/content.js`). Removed invalid `else if (isQueued)` queue advance branch; now notifies user without false queue advancement.
-  - [x] Fix 4: GEMINI_PROXY_FETCH request hang protection (`dist/scripts/background.js`). Added 30-second `AbortSignal.timeout(30000)` deadline and query parameter API key masking in error catches.
-  - [x] Fix 5: DOM selector brittleness (`dist/scripts/content.js`). Added semantic fallback selectors (`div[data-testid='part-Submission_Part']`, etc.) for quiz questions.
-- [x] Phase 5: Validate Patch:
-  - Full test suite execution: 24/24 tests passing.
-  - Syntax check: `node --check` passed on all runtime scripts.
-  - Manifest integrity check: 10/10 referenced files verified on disk.
-  - Student safety invariant verified: Graded assessments are never auto-submitted.
-- [x] Phase 6: Synchronize Project Context & Push to GitHub.
+- [x] Phase 1: Reconcile Project Context (`AGENTS.md`, `AI_CONTEXT.md`, `.agents/state/` synchronized with Git HEAD).
+- [x] Phase 2: Verify Extension Package (`manifest.json` at root, `quiz-progress.html` at root, 10/10 files present, zero syntax errors via `node --check`).
+- [x] Phase 3: Chrome Developer Mode Load & Verification:
+  - Discovered Chrome 137+ deprecation of `--load-extension` flag in branded Google Chrome builds.
+  - Verified package acceptance, service worker declarations, and host permissions.
+- [x] Phase 4: Test Options Page and Storage:
+  - Verified 8-step sequence in real Google Chrome (v155) via CDP.
+  - Verified keys `key`, `model`, `quiz`, and sync `s`.
+  - Confirmed UI feedback and persistence across reloads with zero console exceptions.
+- [x] Phase 5: Test Popup and Extension Pages:
+  - Verified popup layout (340x609px), header branding, 5 workflow buttons, settings navigation, and model dropdown in Chrome CDP.
+  - Verified `quiz-progress.html`: reproduced defect where `./LatticeLoader` returned 404 in browser ES module imports.
+- [x] Phase 6: Verify Runtime Communication Safely:
+  - Non-destructive communication paths exercised (storage sync, popup runtime messaging, progress window initialization).
+  - Production student automation and live assessment submission safely bypassed.
+- [x] Phase 7: Fix Confirmed Staging Defects via TDD:
+  - [x] Fix 1: ES module relative import specifier in `dist/scripts/quiz-progress.js:8` (`./LatticeLoader.js`) and scoped importmap in `quiz-progress.html`.
+  - [x] Fix 2: Handled `chrome.runtime.lastError` callbacks in `dist/scripts/popup.js` (lines 164 & 242) for clean degradation on non-Coursera tabs.
+  - [x] Added `tests/staging-package.test.js` covering package integrity and ES module resolution.
+- [x] Phase 8: Validate Patch & Synchronize:
+  - Full test suite: 28/28 tests passing (`tests/*.test.js`).
+  - Syntax check: `node --check` passed on all 7 scripts.
+  - Real browser CDP verification: `quiz-progress.html` mounts `LatticeLoader` with 18 cells rendered and 0 errors.

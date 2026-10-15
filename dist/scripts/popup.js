@@ -161,7 +161,9 @@
         setTimeout(() => {
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs && tabs[0]) {
-              chrome.tabs.sendMessage(tabs[0].id, "quiz");
+              chrome.tabs.sendMessage(tabs[0].id, "quiz", () => {
+                if (chrome.runtime.lastError) {}
+              });
             }
             window.close();
           });
@@ -241,6 +243,8 @@
       if (tabs && tabs[0]) {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: action
+        }, () => {
+          if (chrome.runtime.lastError) {}
         });
       }
     });

@@ -1,20 +1,25 @@
 # NOW — Current Verified Repository State
 
-- **Timestamp:** 2026-10-15T15:10:00+05:30
+- **Timestamp:** 2026-10-15T15:50:00+05:30
 - **Workspace Root:** `C:\Users\mayan\OneDrive\Desktop\Coursera Assistant`
-- **Git Current HEAD:** Ahead with baseline regression test suite & surgical defect fixes; previous context commit `55b440a` safely pushed and synchronized with `origin/main`.
+- **Git Current HEAD:** Staging Validation Commit (pending sync)
 - **Canonical Remote:** `https://github.com/Cicada33016/coursera-assistant.git` (`origin/main`)
-- **Remote Synchronization:** GitHub CLI authenticated (`Cicada33016` with `repo` scope); push to remote verified via git credential helper.
-- **Test Suite Status:** 24/24 tests passing via built-in `node:test` test harness (`tests/*.test.js`).
+- **Remote Synchronization:** In progress. Staging fixes ready to commit and push.
+- **Test Suite Status:** 28/28 tests passing via built-in `node:test` test harness (`tests/*.test.js`).
+  - Staging package & schema: 4/4 passing (manifest schema, ES module import resolution, safe popup messaging, storage keys).
   - Video completion: 4/4 passing (finite retries, success, network error, HTTP error detection in `putVideoProgress`).
   - Reading completion: 4/4 passing (HTTP 200/201/204, numeric fallback to string, empty data, partial failures).
   - Coach dialogue: 4/4 passing (TARGET_GENUINE_TURNS limit, missing textarea, loader timeout, completion invariant).
   - Gemini quiz assistance: 4/4 passing (response stream caching, key redaction, 404 model fallback, student submission safety).
   - Gemini background proxy: 4/4 passing (destination authorization, status & error propagation, credential masking, request deadline timeout).
   - DOM & selector robustness: 4/4 passing (legacy hash, semantic testid fallback, event dispatching, fallback selectors in content.js).
-- **Syntax & Manifest Verification:**
+- **Package & Structure Verification:**
+  - Manifest file: `manifest.json` at repository root.
+  - Progress window: `quiz-progress.html` at repository root.
+  - Runtime payload: `dist/scripts/`, `dist/ui/`, `dist/assets/`, `dist/popup.html`, `dist/settings.html`.
   - Syntax check: `node --check` passed on all 7 runtime scripts under `dist/scripts/`.
   - Manifest integrity: All 10 files declared in `manifest.json` exist and validate cleanly.
+  - Browser runtime verification: Real Chrome 155.0.8059.79 CDP validation of options page, popup UI, and quiz progress window.
 - **Local Memory State:**
   - Infimium workspace active (`infimium.workspace.json`, project ID: `coursera-assistant`).
   - SQLite vector storage active at `C:\Users\mayan\.infimium\data\vectors.db`.
