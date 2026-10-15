@@ -19,8 +19,8 @@
 
 - **Canonical Remote:** `https://github.com/Cicada33016/coursera-assistant.git`
 - **Default Branch:** `main`
-- **Active Working Tree:** Clean; synchronized with `origin/main` at commit `7b00f554d8d5f9c4e3dedbf06c3576849dd9b991`.
-- **Commit Baseline:** Remote upstream `7b00f55` (*fix(audit): resolve response stream consumption, video progress error handling, and selector resilience*); local HEAD `7b00f55`.
+- **Active Working Tree:** Clean; synchronized with `origin/main` at commit `10824e5a9bbb1197240255db625887baf6476447`.
+- **Commit Baseline:** Remote upstream `10824e5` (*fix(staging): resolve module import path, handle non-coursera tab messaging, and validate extension staging*); local HEAD `10824e5`.
 - **Branching Policy:** Work directly on `main` for verified incremental releases, or feature branches for multi-step tasks. Never force-push (`--force`) or rewrite remote history.
 
 ---
